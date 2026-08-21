@@ -11,7 +11,7 @@ WEB_DIR = ROOT
 DOWNLOAD_DIR = ROOT / "downloads"
 DOWNLOAD_DIR.mkdir(exist_ok=True)
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=str(WEB_DIR), static_url_path="")
 YOUTUBE_HOSTS = {"youtube.com", "www.youtube.com", "m.youtube.com", "youtu.be"}
 
 
