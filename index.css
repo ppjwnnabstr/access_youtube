@@ -47,6 +47,7 @@ input:focus { border-color: var(--green-dark); outline: 3px solid #e8efbf; }
 .file-button { background: var(--green); }
 .button-secondary { background: #e9ede2; color: var(--ink); }
 .button-primary { background: var(--orange); color: #fff; min-height: 46px; white-space: nowrap; }
+.button:disabled { cursor: wait; filter: grayscale(.4); opacity: .65; transform: none; }
 .converter-panel { align-self: start; min-height: 100%; }
 .panel-copy { color: var(--muted); font-size: 14px; line-height: 1.7; margin: 16px 0 30px; }
 .converter-form label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; }

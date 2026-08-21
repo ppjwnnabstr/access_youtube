@@ -41,20 +41,24 @@ converterForm.addEventListener('submit', async (event) => {
 
 	conversionStatus.textContent = 'กำลังส่งลิงก์ไปยังตัวแปลง...';
 	downloadLink.hidden = true;
+	const submitButton = converterForm.querySelector('button[type="submit"]');
+	submitButton.disabled = true;
 	try {
 		const response = await fetch('/api/youtube-to-mp4', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ url })
 		});
-		if (!response.ok) throw new Error('conversion_failed');
-		const result = await response.json();
+		const result = await response.json().catch(() => ({}));
+		if (!response.ok) throw new Error(result.error || `เซิร์ฟเวอร์ตอบกลับ ${response.status}`);
 		if (!result.mp4Url) throw new Error('missing_file');
 		playMp4(result.mp4Url, 'วิดีโอที่แปลงแล้ว');
 		downloadLink.href = result.mp4Url;
 		downloadLink.hidden = false;
 		conversionStatus.textContent = 'แปลงสำเร็จ';
 	} catch (error) {
-		conversionStatus.textContent = 'ยังเชื่อมต่อตัวแปลงไม่ได้: ต้องเปิด backend ที่มี POST /api/youtube-to-mp4';
+		conversionStatus.textContent = `แปลงไม่สำเร็จ: ${error.message}`;
+	} finally {
+		submitButton.disabled = false;
 	}
 });

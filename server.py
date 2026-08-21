@@ -53,7 +53,8 @@ def youtube_to_mp4():
         if not (DOWNLOAD_DIR / filename).exists():
             filename = f"{job_id}.{info.get('ext', 'mp4')}"
         return jsonify(mp4Url=f"/downloads/{filename}")
-    except Exception:
+    except Exception as error:
+        app.logger.exception("YouTube conversion failed: %s", error)
         return jsonify(error="แปลงวิดีโอไม่สำเร็จ ตรวจสอบลิงก์และ FFmpeg"), 500
 
 
