@@ -7,8 +7,8 @@ from flask import Flask, jsonify, request, send_from_directory
 from yt_dlp import YoutubeDL
 
 ROOT = Path(__file__).parent
-WEB_DIR = ROOT / "access_youtube"
-DOWNLOAD_DIR = WEB_DIR / "downloads"
+WEB_DIR = ROOT
+DOWNLOAD_DIR = ROOT / "downloads"
 DOWNLOAD_DIR.mkdir(exist_ok=True)
 
 app = Flask(__name__)
