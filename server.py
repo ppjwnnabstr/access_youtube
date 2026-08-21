@@ -40,11 +40,12 @@ def youtube_to_mp4():
     job_id = uuid.uuid4().hex
     output_template = str(DOWNLOAD_DIR / f"{job_id}.%(ext)s")
     options = {
-        "format": "bestvideo+bestaudio/best",
+        "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
         "merge_output_format": "mp4",
         "outtmpl": output_template,
         "noplaylist": True,
         "quiet": True,
+        "retries": 3,
     }
     try:
         with YoutubeDL(options) as downloader:
@@ -55,7 +56,10 @@ def youtube_to_mp4():
         return jsonify(mp4Url=f"/downloads/{filename}")
     except Exception as error:
         app.logger.exception("YouTube conversion failed: %s", error)
-        return jsonify(error="แปลงวิดีโอไม่สำเร็จ ตรวจสอบลิงก์และ FFmpeg"), 500
+        return jsonify(
+            error="แปลงวิดีโอไม่สำเร็จ",
+            detail=str(error)[:500],
+        ), 500
 
 
 if __name__ == "__main__":

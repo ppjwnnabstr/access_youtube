@@ -50,7 +50,10 @@ converterForm.addEventListener('submit', async (event) => {
 			body: JSON.stringify({ url })
 		});
 		const result = await response.json().catch(() => ({}));
-		if (!response.ok) throw new Error(result.error || `เซิร์ฟเวอร์ตอบกลับ ${response.status}`);
+		if (!response.ok) {
+			const detail = result.detail ? ` (${result.detail})` : '';
+			throw new Error(`${result.error || `เซิร์ฟเวอร์ตอบกลับ ${response.status}`}${detail}`);
+		}
 		if (!result.mp4Url) throw new Error('missing_file');
 		playMp4(result.mp4Url, 'วิดีโอที่แปลงแล้ว');
 		downloadLink.href = result.mp4Url;
