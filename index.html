@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="เครื่องเล่นวิดีโอ MP4 และเครื่องมือเตรียมลิงก์ YouTube สำหรับแปลงเป็น MP4">
+    <link rel="stylesheet" href="index.css">
+    <script src="mp4.js" defer></script>
+    <title>MP4 Studio</title>
+</head>
+<body>
+    <main class="app-shell">
+        <header class="page-header">
+            <p class="eyebrow">LOCAL VIDEO TOOL</p>
+            <h1>MP4 <span>Studio</span></h1>
+            <p class="intro">เล่นไฟล์ MP4 และเตรียมลิงก์วิดีโอสำหรับดาวน์โหลดอย่างเป็นระบบ</p>
+        </header>
+
+        <section class="workspace" aria-label="เครื่องมือวิดีโอ">
+            <div class="player-panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="section-label">PLAYER</p>
+                        <h2>ตัวเล่นวิดีโอ</h2>
+                    </div>
+                    <span id="fileStatus" class="status-pill">ยังไม่มีวิดีโอ</span>
+                </div>
+
+                <div class="video-frame">
+                    <video id="videoPlayer" controls preload="metadata" playsinline>
+                        เบราว์เซอร์นี้ไม่รองรับตัวเล่นวิดีโอ
+                    </video>
+                    <div id="emptyState" class="empty-state">
+                        <span class="play-mark" aria-hidden="true">▶</span>
+                        <strong>เลือกไฟล์ MP4 เพื่อเริ่มเล่น</strong>
+                        <span>หรือใช้ URL ของไฟล์ MP4 โดยตรง</span>
+                    </div>
+                </div>
+
+                <div class="player-actions">
+                    <label class="file-button" for="fileInput">เลือกไฟล์ MP4</label>
+                    <input id="fileInput" type="file" accept="video/mp4,.mp4">
+                    <input id="mp4Url" class="url-input" type="url" placeholder="https://example.com/video.mp4" autocomplete="url">
+                    <button id="loadUrlButton" class="button button-secondary" type="button">โหลด URL</button>
+                </div>
+            </div>
+
+            <aside class="converter-panel">
+                <p class="section-label">CONVERTER</p>
+                <h2>YouTube เป็น MP4</h2>
+                <p class="panel-copy">วางลิงก์วิดีโอที่คุณมีสิทธิ์ดาวน์โหลด ระบบจะส่งต่อให้ตัวแปลงฝั่งเซิร์ฟเวอร์และนำไฟล์ MP4 กลับมาเล่นที่นี่</p>
+
+                <form id="converterForm" class="converter-form">
+                    <label for="youtubeUrl">ลิงก์ YouTube</label>
+                    <div class="input-row">
+                        <input id="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=..." required>
+                        <button class="button button-primary" type="submit">แปลงเป็น MP4</button>
+                    </div>
+                </form>
+                <p id="conversionStatus" class="conversion-status" role="status" aria-live="polite"></p>
+                <a id="downloadLink" class="download-link" hidden download>ดาวน์โหลดไฟล์ MP4</a>
+                <p class="notice">หมายเหตุ: YouTube ไม่มี API ฝั่ง browser สำหรับส่งออกไฟล์ MP4 โดยตรง ฟังก์ชันนี้จึงเรียก `POST /api/youtube-to-mp4` ซึ่งต้องมี backend ที่คุณควบคุมเอง</p>
+            </aside>
+        </section>
+    </main>
+
+</body>
+</html>
